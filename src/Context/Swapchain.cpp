@@ -12,6 +12,7 @@ ig::Swapchain::~Swapchain(void)
 {
 	for (int i = 0; i < __views.size(); i++) {
 		ig_device.destroy_image_view(__views[i]);
+		ig_device.destroy_framebuffer(__framebuffers[i]);
 	}
 	ig_device.destroy_swapchain(__ptr);
 }
@@ -80,9 +81,17 @@ void ig::Swapchain::init_framebuffers(VkRenderPass render_pass)
 		VkFramebufferCreateInfo create_info{ VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO };
 		create_info.renderPass = render_pass;
 		create_info.attachmentCount = 2;
-		create_info.pAttachments = nullptr;
+		create_info.pAttachments = attachments;
 		create_info.width = extent.width;
 		create_info.height = extent.height;
 		create_info.layers = 1;
+
+		__framebuffers[i] = ig_device.create_framebuffer(create_info);
 	}
+}
+
+void ig::Swapchain::acquire_next_image(ig::Semaphore& s)
+{
+	if (vkAcquireNextImageKHR(ig_device, __ptr, UINT64_MAX, s, nullptr, &image_index) != VK_SUCCESS)
+		throw std::runtime_error("failed to acquire next swapchain image");
 }

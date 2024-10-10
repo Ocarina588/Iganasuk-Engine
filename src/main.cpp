@@ -1,15 +1,19 @@
 #include <iostream>
-#include "Context.hpp"
-#include <set>
+#include "Core.hpp"
 
 namespace ig = iganasuk;
 
 int main(int ac, char** av)
 {
-	new ig::Context(1280, 720, "Vulkan app");
+	try {
+		new ig::Context(1280, 720, "test");
+		ig::Core core(ac, av);
 
-	while (ig_window.is_open())
-		ig_window.poll_events();
+		return core.main();
+	}
+	catch (std::exception e) {
+		std::cerr << e.what() << std::endl;
+	}
 
 	return (0);
 }

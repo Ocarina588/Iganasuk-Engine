@@ -160,6 +160,23 @@ VkDeviceMemory ig::Device::allocate_memory(VkMemoryAllocateInfo& i)
 	return memory;
 }
 
+VkCommandBuffer ig::Device::allocate_commad_buffer(VkCommandBufferAllocateInfo& i)
+{
+	VkCommandBuffer cb = nullptr;
+	if (vkAllocateCommandBuffers(info.ptr, &i, &cb) != VK_SUCCESS)
+		throw std::runtime_error("failed to allocate command buffer");
+	return cb;
+}
+
+VkDescriptorSet ig::Device::allocate_descriptor_set(VkDescriptorSetAllocateInfo& i)
+{
+	VkDescriptorSet s = nullptr;
+	if (vkAllocateDescriptorSets(info.ptr, &i, &s) != VK_SUCCESS)
+		throw std::runtime_error("failed to allocate descriptor set");
+	return s;
+}
+
+
 VkSwapchainKHR ig::Device::create_swapchain(VkSwapchainCreateInfoKHR& i)
 {
 	VkSwapchainKHR s = nullptr;
@@ -174,6 +191,78 @@ VkRenderPass ig::Device::create_renderpass(VkRenderPassCreateInfo& i)
 	if (vkCreateRenderPass(info.ptr, &i, nullptr, &r) != VK_SUCCESS)
 		throw std::runtime_error("failed to create render pass");
 	return r;
+}
+
+VkFence ig::Device::create_fence(VkFenceCreateInfo& i)
+{
+	VkFence f = nullptr;
+	if (vkCreateFence(info.ptr, &i, nullptr, &f) != VK_SUCCESS)
+		throw std::runtime_error("failed to create fence");
+	return f;
+}
+
+VkSemaphore ig::Device::create_semaphore(VkSemaphoreCreateInfo& i)
+{
+	VkSemaphore s = nullptr;
+	if (vkCreateSemaphore(info.ptr, &i, nullptr, &s) != VK_SUCCESS)
+		throw std::runtime_error("failed to create semaphore");
+	return s;
+}
+
+VkShaderModule ig::Device::create_shader_module(VkShaderModuleCreateInfo& i)
+{
+	VkShaderModule m = nullptr;
+	if (vkCreateShaderModule(info.ptr, &i, nullptr, &m) != VK_SUCCESS)
+		throw std::runtime_error("failed to create shader module");
+	return m;
+}
+
+VkCommandPool ig::Device::create_command_pool(VkCommandPoolCreateInfo& i)
+{
+	VkCommandPool p = nullptr;
+	if (vkCreateCommandPool(info.ptr, &i, nullptr, &p) != VK_SUCCESS)
+		throw std::runtime_error("failed to create command pool");
+	return p;
+}
+
+VkPipelineLayout ig::Device::create_pipeline_layout(VkPipelineLayoutCreateInfo& i)
+{
+	VkPipelineLayout l = nullptr;
+	if (vkCreatePipelineLayout(info.ptr, &i, nullptr, &l) != VK_SUCCESS)
+		throw std::runtime_error("failed to create layout");
+	return l;
+}
+
+VkPipeline ig::Device::create_pipeline(VkGraphicsPipelineCreateInfo& i)
+{
+	VkPipeline g = nullptr;
+	if (vkCreateGraphicsPipelines(info.ptr, nullptr, 1, &i, nullptr, &g) != VK_SUCCESS)
+		throw std::runtime_error("failed to create graphics pipeline");
+	return g;
+}
+
+VkBuffer ig::Device::create_buffer(VkBufferCreateInfo& i)
+{
+	VkBuffer b = nullptr;
+	if (vkCreateBuffer(info.ptr, &i, nullptr, &b) != VK_SUCCESS)
+		throw std::runtime_error("failed to create buffer");
+	return b;
+}
+
+VkDescriptorPool ig::Device::create_descriptor_pool(VkDescriptorPoolCreateInfo& i)
+{
+	VkDescriptorPool p = nullptr;
+	if (vkCreateDescriptorPool(info.ptr, &i, nullptr, &p) != VK_SUCCESS)
+		throw std::runtime_error("failed to create descriptor pool");
+	return p;
+}
+
+VkDescriptorSetLayout ig::Device::create_descriptor_set_layout(VkDescriptorSetLayoutCreateInfo& i)
+{
+	VkDescriptorSetLayout l = nullptr;
+	if (vkCreateDescriptorSetLayout(info.ptr, &i, nullptr, &l) != VK_SUCCESS)
+		throw std::runtime_error("failed to create descriptor layout");
+	return l;
 }
 
 void ig::Device::bind_memory(VkImage image, VkDeviceMemory memory, VkDeviceSize offset)
@@ -198,4 +287,16 @@ VkMemoryRequirements ig::Device::get_memory_requirments(VkBuffer buffer)
 	VkMemoryRequirements memRequirements;
 	vkGetBufferMemoryRequirements(info.ptr, buffer, &memRequirements);
 	return memRequirements;
+}
+
+void ig::Device::submit(VkQueue queue, uint32_t n, VkSubmitInfo* info, ig::Fence& fence)
+{
+	if (vkQueueSubmit(queue, n, info, fence) != VK_SUCCESS)
+		throw std::runtime_error("failed to submit to queue");
+}
+
+void ig::Device::map_memory(VkDeviceMemory& m, VkDeviceSize size, void** data, VkMemoryMapFlags flags, VkDeviceSize offset)
+{
+	if (vkMapMemory(info.ptr, m, offset, size, flags, data) != VK_SUCCESS)
+		throw std::runtime_error("failed to map memory");
 }

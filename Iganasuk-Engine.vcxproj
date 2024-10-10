@@ -134,6 +134,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Buffer.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Command.cpp" />
     <ClCompile Include="src\Context\Context.cpp" />
     <ClCompile Include="src\Context\Device.cpp" />
     <ClCompile Include="src\Context\Instance.cpp" />
@@ -141,11 +144,20 @@
     <ClCompile Include="src\Context\Surface.cpp" />
     <ClCompile Include="src\Context\Swapchain.cpp" />
     <ClCompile Include="src\Context\Window.cpp" />
+    <ClCompile Include="src\Core.cpp" />
+    <ClCompile Include="src\Descriptor.cpp" />
+    <ClCompile Include="src\Event.cpp" />
+    <ClCompile Include="src\GraphicsPipeline.cpp" />
     <ClCompile Include="src\Image.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Model.cpp" />
+    <ClCompile Include="src\Shader.cpp" />
+    <ClCompile Include="src\Synchronisation.cpp" />
     <ClCompile Include="src\utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Buffer.hpp" />
+    <ClInclude Include="include\Camera.hpp" />
     <ClInclude Include="include\Context.hpp" />
     <ClInclude Include="include\Context\Device.hpp" />
     <ClInclude Include="include\Context\Instance.hpp" />
@@ -153,8 +165,16 @@
     <ClInclude Include="include\Context\Surface.hpp" />
     <ClInclude Include="include\Context\Swapchain.hpp" />
     <ClInclude Include="include\Context\Window.hpp" />
+    <ClInclude Include="include\Core.hpp" />
+    <ClInclude Include="include\Descriptor.hpp" />
+    <ClInclude Include="include\Event.hpp" />
+    <ClInclude Include="include\Model.hpp" />
+    <ClInclude Include="include\Pipeline.hpp" />
     <ClInclude Include="include\Image.hpp" />
+    <ClInclude Include="include\Shader.hpp" />
+    <ClInclude Include="include\Synchronisation.hpp" />
     <ClInclude Include="include\utils.hpp" />
+    <ClInclude Include="include\Command.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -9,6 +9,7 @@ ig::Context::Context(int w, int h, std::string const& title_name) : __window(w, 
 	char const** tmp = glfwGetRequiredInstanceExtensions(&count);
 	for (uint32_t i = 0; i < count; i++)
 		__instance.add_extension(tmp[i]);
+
 	__instance.add_extension("VK_EXT_debug_utils");
 	__instance.add_layer("VK_LAYER_KHRONOS_validation");
 	__instance.add_layer("VK_LAYER_LUNARG_monitor");
@@ -17,11 +18,20 @@ ig::Context::Context(int w, int h, std::string const& title_name) : __window(w, 
 	__surface.init(__instance, __window);
 	
 	__device.add_extension(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
+	//__device.add_extension(VK_KHR_ACCELERATION_STRUCTURE_EXTENSION_NAME);
+	//__device.add_extension(VK_KHR_RAY_TRACING_PIPELINE_EXTENSION_NAME);
+	//__device.add_extension(VK_KHR_DEFERRED_HOST_OPERATIONS_EXTENSION_NAME);
+	//__device.add_extension(VK_KHR_BUFFER_DEVICE_ADDRESS_EXTENSION_NAME);
+	//__device.add_extension(VK_EXT_DESCRIPTOR_INDEXING_EXTENSION_NAME);
+	//__device.add_extension(VK_KHR_SPIRV_1_4_EXTENSION_NAME);
+	//__device.add_extension(VK_KHR_SHADER_FLOAT_CONTROLS_EXTENSION_NAME);
 	__device.init(__instance, __surface);
 
 	__swapchain.init(__device.info, __window, __surface);
 
 	__render_pass.init();
+
+	__swapchain.init_framebuffers(__render_pass);
 }
 
 ig::Context::~Context(void)
