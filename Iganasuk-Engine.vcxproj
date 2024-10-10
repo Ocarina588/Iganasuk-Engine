@@ -70,6 +70,11 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(SolutionDir)\libraries\glm\include;$(SolutionDir)\libraries\vulkan\include;$(SolutionDir)\libraries\GLFW\include;$(IncludePath)</IncludePath>
+    <ExternalIncludePath>$(SolutionDir)\include;$(ExternalIncludePath)</ExternalIncludePath>
+    <LibraryPath>$(SolutionDir)\libraries\vulkan\bin;$(SolutionDir)\libraries\GLFW\bin;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -104,10 +109,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>glfw3.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -127,7 +134,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Context\Context.cpp" />
+    <ClCompile Include="src\Context\Device.cpp" />
+    <ClCompile Include="src\Context\Instance.cpp" />
+    <ClCompile Include="src\Context\RenderPass.cpp" />
+    <ClCompile Include="src\Context\Surface.cpp" />
+    <ClCompile Include="src\Context\Swapchain.cpp" />
+    <ClCompile Include="src\Context\Window.cpp" />
+    <ClCompile Include="src\Image.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\utils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Context.hpp" />
+    <ClInclude Include="include\Context\Device.hpp" />
+    <ClInclude Include="include\Context\Instance.hpp" />
+    <ClInclude Include="include\Context\RenderPass.hpp" />
+    <ClInclude Include="include\Context\Surface.hpp" />
+    <ClInclude Include="include\Context\Swapchain.hpp" />
+    <ClInclude Include="include\Context\Window.hpp" />
+    <ClInclude Include="include\Image.hpp" />
+    <ClInclude Include="include\utils.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
